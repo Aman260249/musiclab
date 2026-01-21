@@ -28,7 +28,7 @@ const RecommendedArtists = () => {
     <section className="trending-section">
       <div className="section-header">
         <h2>Recommended Artists</h2>
-        <Link href="/artists" className="see-all">See ALL</Link>
+        <Link href="/profileartis" className="see-all">See ALL</Link>
       </div>
       
       <div className="songs-container">

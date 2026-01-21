@@ -2,7 +2,7 @@
 import React from 'react';
 import { useMusic } from '../context/MusicContext';
 import SongCard from '../components/music/SongCard'; // Path apne hisab se check kar lena
-import "../styles/likedSongs.css";
+import "@/app/styles/liked-songs.css";
 
 const LikedSongsPage = () => {
   const { likedSongs, user } = useMusic();

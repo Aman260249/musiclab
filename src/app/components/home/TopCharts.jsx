@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useMusic } from '@/app/context/MusicContext'; // Context lo
 import SongCard from '../music/SongCard';
@@ -19,9 +20,9 @@ const TopCharts = () => {
         <h2>Top Charts</h2>
         <motion.span 
           whileHover={{ scale: 1.1 }}
-          className="see-all"
+          // className="see-all"
         >
-          See ALL
+        <Link href="/top-charts" className="see-all">See ALL</Link>
         </motion.span>
       </div>
       

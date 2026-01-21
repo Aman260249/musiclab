@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           <ul>
             <li onClick={() => handleNavigation('new-releases')}>New Releases</li>
             <li onClick={() => handleNavigation('top-charts')}>Top Charts</li>
-            <li onClick={() => handleNavigation('RecommendedArtists')}>Top Artists</li>
+            <li onClick={() => handleNavigation('recommendedartists')}>Top Artists</li>
             
              <li> <Link href="/albums" className="sidebar-link">Albums</Link> </li>
             <li onClick={() => handleNavigation('categories')}>Categories</li>

@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 import { useMusic } from '@/app/context/MusicContext';
 import SongCard from '../music/SongCard';
 import "../../styles/home.css";
@@ -14,7 +15,7 @@ const NewReleases = () => {
     <section className="trending-section">
       <div className="section-header">
         <h2>New Releases</h2>
-        <span className="see-all">See ALL</span>
+        <Link href="/new-releases" className="see-all">See ALL</Link>
       </div>
       
       <div className="songs-container">

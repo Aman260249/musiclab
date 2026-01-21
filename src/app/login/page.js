@@ -1,12 +1,15 @@
-export const dynamic = "force-dynamic";
 "use client";
+
 import React, { useState, useEffect, Suspense } from 'react';
 import { auth } from '../context/lib/firebase'; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import "../styles/auth.css";
 
-// 1. Asli Auth Logic ko ek alag component mein rakha
+// Force dynamic ko humesha imports ke baad rakhte hain
+export const dynamic = "force-dynamic";
+
+// 1. Logic Component (Suspense ke andar use karne ke liye)
 const AuthContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -102,8 +105,8 @@ const AuthContent = () => {
     );
 };
 
-// 2. Main Export mein Suspense use kiya taaki Vercel Build Error na aaye
-export default function AuthPage() {
+// 2. Default Export (Jo Vercel Build ko pass karayega)
+export default function LoginPage() {
     return (
         <Suspense fallback={<div className="loading-screen">Loading MusicLab...</div>}>
             <AuthContent />

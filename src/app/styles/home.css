@@ -214,9 +214,35 @@
 .made-by-codelab {
   font-size: 15px;
   font-weight: 500;
-  color: #888;
+  color: #2b2a2a;
+}
+ 
+  /* --- See ALL Button Styling --- */
+.see-all {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7fbc94; /* MusicLab Green */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 20px;
 }
 
+.see-all:hover {
+  background: rgba(29, 185, 84, 0.1); /* Halka green background hover par */
+  color: #19a34a;
+  transform: translateY(-2px);
+}
+
+/* Section Header ko thoda clean karne ke liye */
+.section-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+}
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .dev-content-wrapper.pro-layout {
