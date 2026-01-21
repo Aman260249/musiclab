@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { auth } from '../context/lib/firebase'; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import "../styles/auth.css";
 
-const AuthPage = () => {
+// 1. Asli Auth Logic ko ek alag component mein rakha
+const AuthContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const mode = searchParams.get('mode');
@@ -51,7 +52,6 @@ const AuthPage = () => {
             )}
 
             <div className="auth-glass-card">
-                {/* --- LEFT SIDE: IMAGE (Ye add karna tha!) --- */}
                 <div className="auth-left-image">
                     <div className="image-overlay">
                         <h2>MusicLab</h2>
@@ -59,7 +59,6 @@ const AuthPage = () => {
                     </div>
                 </div>
 
-                {/* --- RIGHT SIDE: FORM --- */}
                 <div className="auth-right-form">
                     <div className="auth-header">
                         <h1>{isLogin ? "Welcome Back" : "Join MusicLab"}</h1>
@@ -102,4 +101,11 @@ const AuthPage = () => {
     );
 };
 
-export default AuthPage;
+// 2. Main Export mein Suspense use kiya taaki Vercel Build Error na aaye
+export default function AuthPage() {
+    return (
+        <Suspense fallback={<div className="loading-screen">Loading MusicLab...</div>}>
+            <AuthContent />
+        </Suspense>
+    );
+}
