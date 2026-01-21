@@ -1,9 +1,8 @@
-export const dynamic = "force-dynamic";
-"use client";
+"use client"; 
 import React from 'react';
 import { useMusic } from '../context/MusicContext';
 import SongCard from '../components/music/SongCard'; // Path apne hisab se check kar lena
-import "../styles/liked-songs.css";
+import "../styles/likedSongs.css";
 
 const LikedSongsPage = () => {
   const { likedSongs, user } = useMusic();
