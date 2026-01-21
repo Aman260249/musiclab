@@ -1,0 +1,335 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full screen height */
+  overflow: hidden;
+}
+
+.main-container {
+  display: flex;
+  flex: 1; /* Baki bachi hui jagah lega Navbar ke niche */
+  overflow: hidden;
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto; /* Sirf ye area scroll hoga */
+  padding: 20px;
+  background-color: #f3f4f6;
+}
+
+/* Sidebar fix karne ke liye */
+aside {
+  width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+} 
+
+/* musicbar   css start here */
+
+.music-player-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 95px;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.music-player-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* LEFT SECTION */
+.player-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.current-song-img img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.current-song-details h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+}
+
+.current-song-details p {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.like-icon {
+  margin-left: 10px;
+  color: #888;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.like-icon:hover {
+  color: #ff4d4d;
+}
+
+/* CENTER SECTION */
+.player-center {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.play-pause-btn-pro {
+  width: 45px;
+  height: 45px;
+  background-color: #111;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.play-pause-btn-pro:hover {
+  transform: scale(1.08);
+  background-color: #000;
+}
+
+.secondary-icon { color: #888; cursor: pointer; }
+.main-icon { color: #333; cursor: pointer; }
+
+/* PROGRESS BAR */
+.progress-container-pro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 80%;
+}
+
+.time { font-size: 11px; color: #888; min-width: 30px; }
+
+.progress-bar-pro {
+  flex: 1;
+  height: 5px;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.progress-filled-pro {
+  width: 35%; /* Demo progress */
+  height: 100%;
+  background-color: #1db954;
+  border-radius: 10px;
+  position: relative;
+}
+
+.progress-knob {
+  position: absolute;
+  right: -6px;
+  top: -4px;
+  width: 13px;
+  height: 13px;
+  background: #fff;
+  border: 2px solid #1db954;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.progress-bar-pro:hover .progress-knob {
+  opacity: 1;
+}
+
+/* RIGHT SECTION */
+.player-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+}
+
+.volume-bar-pro {
+  flex: 1;
+  height: 4px;
+  background: #e5e5e5;
+  border-radius: 10px;
+}
+
+.volume-filled-pro {
+  width: 70%;
+  height: 100%;
+  background: #333;
+  border-radius: 10px;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .music-player-container {
+    height: 75px;
+    bottom: 65px; /* BottomNav ke upar */
+    padding: 0 15px;
+  }
+  .player-right, .progress-container-pro, .secondary-icon { display: none; }
+  .player-left { flex: 2; }
+  .current-song-img img { width: 50px; height: 50px; }
+  .controls { gap: 20px; }
+}
+/* music bar end css  */
+
+
+/* Social Footer ka code css start here  */
+.social-footer {
+  background-color: #fafafa;
+  padding: 40px 20px;
+  border-top: 1px solid #eee;
+  text-align: center;
+  margin-top: 50px;
+  /* Music player ke piche na chhup jaye isliye padding-bottom */
+  padding-bottom: 120px; 
+}
+
+.footer-top h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.footer-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-social-icons a {
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.footer-social-icons a:hover {
+  color: #1db954;
+  transform: translateY(-5px);
+}
+
+.footer-bottom {
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #888;
+}
+
+.footer-bottom span {
+  color: #1db954;
+  font-weight: 700;
+}
+/* Social Footer ka code css start end  here   */
+
+/* .volume-bar-pro */ 
+
+.volume-bar-wrapper {
+  position: relative;
+  width: 100px; /* Isse width adjust karlo */
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.volume-slider-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Isse asli slider chhup jayega */
+  cursor: pointer;
+  z-index: 10;
+}
+
+.volume-bar-pro {
+  width: 100%;
+  height: 4px;
+  background: #444; /* Dark gray for empty bar */
+  border-radius: 2px;
+  position: relative;
+}
+
+.volume-filled-pro {
+  height: 100%;
+  background: #1db954; /* Green color for filled part */
+  border-radius: 2px;
+  transition: width 0.1s ease;
+} 
+
+
+
+/* Search Results Grid Layout (categorise )*/
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+  padding: 20px 0;
+  animation: fadeIn 0.5s ease; /* Result aane par smooth animation */
+}
+
+/* Jab search result section khule */
+.search-results-container {
+  padding: 40px 20px;
+  min-height: 60vh;
+  background: linear-gradient(to bottom, rgba(29, 185, 84, 0.1), transparent);
+}
+
+.search-results-container h2 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* Simple animation for smooth appearance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+} 
+
+/* end here css categorise (green effect ) */

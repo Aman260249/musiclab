@@ -1,0 +1,46 @@
+.bottom-nav {
+  display: none; /* Desktop par nahi dikhega */
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: rgba(255, 255, 255, 0.95); /* Thoda glass effect */
+    backdrop-filter: blur(10px); /* Background dhundla dikhega */
+    border-top: 1px solid #eee;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 3000;
+    padding-bottom: 5px;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #888; /* Unselected icons ka color */
+    transition: all 0.3s ease;
+    flex: 1;
+  }
+
+  .nav-item .label {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Jab icon par click ho ya wo active ho */
+  .nav-item.active {
+    color: #1db954; /* Spotify green ya apna pasandida color */
+  }
+
+  .nav-item:active {
+    transform: scale(0.9); /* Click karne par chhota sa bounce effect */
+  }
+}

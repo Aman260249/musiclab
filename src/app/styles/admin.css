@@ -1,0 +1,136 @@
+.admin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  padding: 20px;
+  background: #0b0b0b;
+  font-family: sans-serif;
+}
+
+/* Modal Styling */
+.pin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(15px);
+}
+
+.pin-modal {
+  background: #121212;
+  padding: 40px 30px;
+  border-radius: 24px;
+  text-align: center;
+  width: 95%;
+  max-width: 420px;
+  border: 1px solid #282828;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+.pin-modal h3 { color: white; margin: 15px 0 5px; font-size: 22px; }
+.pin-modal p { color: #b3b3b3; font-size: 14px; margin-bottom: 25px; }
+
+.pin-modal input {
+  width: 100%;
+  padding: 15px 10px;
+  margin-bottom: 20px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  color: #1db954;
+  text-align: center;
+  font-size: 20px; /* Font size thoda chota kiya 10 chars ke liye */
+  letter-spacing: 6px; /* Spacing kam ki taaki fit ho sake */
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.pin-modal input:focus { border-color: #1db954; }
+
+.pin-modal button {
+  width: 100%;
+  padding: 14px;
+  background: #1db954;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* Admin Card */
+.admin-card {
+  background: #181818;
+  width: 100%;
+  max-width: 650px;
+  padding: 35px;
+  border-radius: 20px;
+  color: white;
+  border: 1px solid #282828;
+}
+
+.admin-header { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+.admin-header h2 { font-size: 24px; margin: 0; }
+
+.input-row { display: flex; gap: 15px; margin-bottom: 15px; }
+
+.input-field {
+  flex: 1;
+  padding: 12px 16px;
+  background: #282828;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.input-field:focus { border-color: #555; outline: none; }
+
+.url-inputs .with-icon {
+  display: flex;
+  align-items: center;
+  background: #282828;
+  margin-bottom: 12px;
+  padding: 0 15px;
+  border-radius: 8px;
+  color: #b3b3b3;
+}
+
+.url-inputs input {
+  background: transparent;
+  border: none;
+  padding: 12px;
+  color: white;
+  width: 100%;
+  outline: none;
+}
+
+.checkbox-section { display: flex; gap: 20px; margin: 20px 0; color: #b3b3b3; font-size: 14px; }
+.checkbox-section input { accent-color: #1db954; cursor: pointer; }
+
+.upload-btn {
+  width: 100%;
+  padding: 16px;
+  background: #1db954;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.upload-btn:hover { transform: scale(1.02); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .input-row { flex-direction: column; }
+  .pin-modal { padding: 30px 20px; }
+  .pin-modal input { font-size: 18px; letter-spacing: 4px; }
+}

@@ -1,0 +1,65 @@
+.liked-songs-container {
+  padding: 80px 40px;
+  background: linear-gradient(to bottom, #2c3e50, #000000); /* Deep blue-ish black */
+  min-height: 100vh;
+  color: white;
+}
+
+.liked-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.heart-icon-big {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #450af5, #c4efd9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.header-text h1 {
+  font-size: 4rem;
+  margin: 10px 0;
+  font-weight: 800;
+}
+
+.header-text p {
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 30px;
+}
+
+.liked-songs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.empty-state, .no-songs {
+  text-align: center;
+  margin-top: 100px;
+  color: #b3b3b3;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .liked-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .header-text h1 { font-size: 2.5rem; }
+}

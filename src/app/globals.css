@@ -1,0 +1,44 @@
+/* Google Fonts Import (Poppins for Headings, Inter for Body) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --primary-font: 'Inter', sans-serif;
+  --heading-font: 'Poppins', sans-serif;
+  --bg-color: #ffffff;
+  --text-main: #111111;
+  --text-muted: #666666;
+  --accent-color: #1db954; /* MusicLab Theme Color */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--primary-font); /* Default font sabke liye */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased; /* Font ko smooth dikhane ke liye */
+}
+
+h1, h2, h3, h4, .logo, .section-title {
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+/* Scrollbar ko thoda patla aur stylish banane ke liye */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
