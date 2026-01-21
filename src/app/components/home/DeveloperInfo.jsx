@@ -7,67 +7,42 @@ import "../../styles/home.css";
 const DeveloperInfo = () => {
   return (
     <div className="developer-info-container">
-      <div className="stylish-line"></div>
+      <div className="stylish-line" style={{height:'1px', background:'rgba(255,255,255,0.1)', width:'80%'}}></div>
       
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
         className="dev-content-wrapper pro-layout" 
       >
-        {/* Badi Profile Image with Animated Border */}
         <div className="dev-profile-pic-large">
-          <img src="/images/codelabbro.png" alt="CodeLAB Profile" />
+          {/* Photo Fix: Path check karo ki public/images/codelabbro.png hai ya nahi */}
+          <img src="/images/codelabbro.png" alt="CodeLAB" onError={(e) => e.target.src = "https://via.placeholder.com/200"} />
           <div className="pic-glow"></div>
         </div>
 
         <div className="dev-text-content">
-          <motion.p 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="dev-greeting"
-          >
-            Behind the Code
-          </motion.p>
-          
+          <p className="dev-greeting" style={{color:'#1db954', fontWeight:'600'}}>Behind the Code</p>
           <h2 className="dev-name">I'm <span>CodeLAbBro</span></h2>
-          
           <p className="dev-bio-pro">
-            A creative developer blending the art of design with the logic of programming. 
-            I built <b>MusicLab</b> to push the boundaries of web-based music experiences. 
-            Every pixel and every line of code is crafted to bring you closer to the rhythm.
+            A creative developer building <b>MusicLab</b> to push the boundaries of music. 
+            Every pixel is crafted to bring you closer to the rhythm.
           </p>
 
-          <div className="social-links-pro">
-            <motion.a whileHover={{ y: -5 }} href="https://github.com/your-github" target="_blank"><Github size={28} /></motion.a>
-            <motion.a whileHover={{ y: -5 }} href="https://linkedin.com/in/your-linkedin" target="_blank"><Linkedin size={28} /></motion.a>
-            <motion.a whileHover={{ y: -5 }} href="mailto:your-email@example.com"><Mail size={28} /></motion.a>
+          <div className="social-links-pro" style={{display:'flex', gap:'20px', marginTop:'20px'}}>
+            <motion.a whileHover={{ y: -5 }} href="https://github.com/Aman260249" style={{color:'white'}}><Github size={24} /></motion.a>
+            <motion.a whileHover={{ y: -5 }} href="https://www.linkedin.com/in/aman-sharma-2b0183210" style={{color:'white'}}><Linkedin size={24} /></motion.a>
+            <motion.a whileHover={{ y: -5 }} href="https://mail.google.com" style={{color:'white'}}><Mail size={24} /></motion.a>
           </div>
         </div>
       </motion.div>
 
-      <div className="stylish-line"></div>
-
-      {/* Signature with Logo Merged */}
-      <div className="final-signature-merged">
-        <motion.div 
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="footer-logo-box"
-        >
-          <img src="/images/logo-retouch.png" alt="Logo" />
-        </motion.div>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="made-by-codelab"
-        >
-          Project Vision by <span>CodeLAbBro</span> &copy; 2025
-        </motion.p>
+      <div className="final-signature-merged" style={{marginTop:'40px', textAlign:'center'}}>
+        <div className="footer-logo-box" style={{margin:'0 auto 10px'}}>
+           <img src="/images/logo-retouch.png" alt="Logo" style={{width:'200px'}} />
+        </div>
+        <p className="made-by-codelab" style={{color:'#666', fontSize:'14px'}}>
+          Project Vision by <span style={{color:'#1db954'}}>CodeLAbBro</span> &copy; 2026
+        </p>
       </div>
     </div>
   );
