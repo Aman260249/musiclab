@@ -1,20 +1,20 @@
 "use client";
 import React, { useState } from 'react';
 import { useMusic } from '@/app/context/MusicContext';
+import { ChevronLeft, Play, Disc } from 'lucide-react';
 import "@/app/styles/albums.css";
 
 const AlbumsPage = () => {
   const { allSongs, playSong } = useMusic();
   const [selectedAlbum, setSelectedAlbum] = useState(null);
 
-  // 1. Data grouping logic (Variable names fix kiye hain)
+  // Album Grouping Logic
   const albums = allSongs.reduce((acc, song) => {
     const albumName = song.album || "Single Tracks";
     if (!acc[albumName]) {
       acc[albumName] = {
         name: albumName,
         artist: song.artist || "Unknown Artist",
-        // FIX: song.image ke saath song.imageUrl bhi check karo
         image: song.imageUrl || song.image || "/default-album.png", 
         songs: []
       };
@@ -25,22 +25,23 @@ const AlbumsPage = () => {
 
   const albumList = Object.values(albums);
 
-  // --- DETAIL VIEW ---
+  // --- 1. DETAIL VIEW (After Clicking an Album) ---
   if (selectedAlbum) {
     return (
       <div className="albums-page">
-        <button className="back-btn" onClick={() => setSelectedAlbum(null)}>
-          ← Back to Albums
+        <button className="back-btn-minimal" onClick={() => setSelectedAlbum(null)}>
+          <ChevronLeft size={18} /> Back to Library
         </button>
         
         <div className="album-detail-header">
-          {/* FIX: Detail mein bhi image path check kiya */}
-          <img src={selectedAlbum.image} alt={selectedAlbum.name} />
+          <div className="detail-img-container">
+            <img src={selectedAlbum.image} alt={selectedAlbum.name} />
+          </div>
           <div className="detail-info">
             <h1>{selectedAlbum.name}</h1>
-            <p>{selectedAlbum.artist} • {selectedAlbum.songs.length} Songs</p>
+            <p>{selectedAlbum.artist} • {selectedAlbum.songs.length} Tracks</p>
             <button className="play-all-btn" onClick={() => playSong(selectedAlbum.songs[0])}>
-              Play All
+              <Play size={20} fill="white" /> Play All
             </button>
           </div>
         </div>
@@ -60,12 +61,12 @@ const AlbumsPage = () => {
     );
   }
 
-  // --- GRID VIEW ---
+  // --- 2. GRID VIEW (Main Albums Page) ---
   return (
     <div className="albums-page">
       <div className="albums-header">
         <h1>Your Albums</h1>
-        <p>Aapke pasandida collections yahan hain.</p>
+        <p>Curated collections for your mood.</p>
       </div>
 
       <div className="albums-grid">
@@ -78,7 +79,9 @@ const AlbumsPage = () => {
             >
               <div className="album-img-wrapper">
                 <img src={album.image} alt={album.name} />
-                <div className="album-play-overlay">▶</div>
+                <div className="album-play-overlay">
+                  <Play size={22} fill="white" color="white" />
+                </div>
               </div>
               <div className="album-info">
                 <h3>{album.name}</h3>
@@ -87,9 +90,10 @@ const AlbumsPage = () => {
             </div>
           ))
         ) : (
-          <p style={{ color: '#888', textAlign: 'center', gridColumn: '1/-1' }}>
-            Loading your albums...
-          </p>
+          <div className="loading-state" style={{ textAlign: 'center', gridColumn: '1/-1', padding: '100px 0' }}>
+             <Disc className="animate-spin" size={40} color="#1db954" />
+             <p style={{ marginTop: '10px', color: '#888' }}>Loading your vibe...</p>
+          </div>
         )}
       </div>
     </div>

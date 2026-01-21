@@ -1,20 +1,17 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link'; // <--- Ye miss ho sakta hai
+import Link from 'next/link';
 import { useMusic } from '@/app/context/MusicContext';
 import "../../styles/home.css";
 
 const RecommendedArtists = () => {
-  const { allSongs = [] } = useMusic(); // Fallback to empty array
+  const { allSongs = [] } = useMusic();
 
-  // --- Logic: Unique Artists nikalna ---
   const uniqueArtists = allSongs.reduce((acc, song) => {
-    // Check if artist name exists and isn't already in our accumulator
     if (song.artist && !acc.find(a => a.name === song.artist)) {
       acc.push({
         name: song.artist,
-        // Priority: Admin's Artist Image -> Song Image -> Default Icon
         img: song.artistImage || song.imageUrl || song.image || "/default-artist.png", 
         id: song.artist.toLowerCase().trim().replace(/\s+/g, '-') 
       });
@@ -22,12 +19,12 @@ const RecommendedArtists = () => {
     return acc;
   }, []);
 
-  if (uniqueArtists.length === 0) return null; // Kuch na dikhao agar artists nahi hain
+  if (uniqueArtists.length === 0) return null;
 
   return (
     <section className="trending-section">
       <div className="section-header">
-        <h2>Recommended Artists</h2>
+        <h2 style={{ fontSize: '1.4rem', fontWeight: '800' }}>Artists to Follow</h2>
         <Link href="/profileartis" className="see-all">See ALL</Link>
       </div>
       
@@ -39,14 +36,15 @@ const RecommendedArtists = () => {
             style={{ textDecoration: 'none' }}
           >
             <motion.div 
-              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }} 
               className="artist-card"
             >
               <div className="artist-image-wrapper">
                 <img 
                   src={artist.img} 
                   alt={artist.name} 
-                  onError={(e) => { e.target.src = "/default-artist.png" }} // Broken link safety
+                  loading="lazy"
+                  onError={(e) => { e.target.src = "/default-artist.png" }}
                 />
               </div>
               <p className="artist-name-label">{artist.name}</p>

@@ -39,7 +39,7 @@ aside {
   z-index: 5000;
   display: flex;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 px;
   /* Glassmorphism Effect */
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(15px);
@@ -206,9 +206,11 @@ aside {
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
   .music-player-container {
-    height: 75px;
-    bottom: 65px; /* BottomNav ke upar */
-    padding: 0 15px;
+    height: 70px; /* Thoda sleek height */
+    bottom: 0;    /* Ab ye ekdum niche fix ho jayega */
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.95); /* Better visibility */
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
   .player-right, .progress-container-pro, .secondary-icon { display: none; }
   .player-left { flex: 2; }

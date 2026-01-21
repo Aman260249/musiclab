@@ -1,15 +1,12 @@
 "use client";
-
 import React, { useState, useEffect, Suspense } from 'react';
 import { auth } from '../context/lib/firebase'; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import "../styles/auth.css";
 
-// Force dynamic ko humesha imports ke baad rakhte hain
 export const dynamic = "force-dynamic";
 
-// 1. Logic Component (Suspense ke andar use karne ke liye)
 const AuthContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -35,13 +32,11 @@ const AuthContent = () => {
                 await createUserWithEmailAndPassword(auth, email, password);
                 setMessage("Welcome to MusicLab! 🚀");
             }
-            
             setShowPopup(true);
             setTimeout(() => {
                 setShowPopup(false);
                 router.push('/');
             }, 2000);
-
         } catch (error) {
             alert(error.message);
         }
@@ -105,10 +100,9 @@ const AuthContent = () => {
     );
 };
 
-// 2. Default Export (Jo Vercel Build ko pass karayega)
 export default function LoginPage() {
     return (
-        <Suspense fallback={<div className="loading-screen">Loading MusicLab...</div>}>
+        <Suspense fallback={<div className="loading-screen" style={{color: '#1db954', textAlign: 'center', marginTop: '50px'}}>Loading...</div>}>
             <AuthContent />
         </Suspense>
     );

@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
             {/* Mobile Footer/Player wrapper */}
             <div className="mobile-player-nav-wrapper">
                <Footer />
-               <BottomNav />
+               
             </div>
           </div>
         </MusicProvider>
