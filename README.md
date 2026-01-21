@@ -37,43 +37,92 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 
-🎵 MusicLab - Full Stack Music Streaming App
+🎵 MusicLab – Full Stack Music Streaming App
 
-MusicLab ek modern music streaming web application hai jise maine (CodeLab) banaya hai. Isme users gaane sun sakte hain, apne pasandida gaane like kar sakte hain aur Admin panel ke zariye naya music database mein add kar sakte hain.
+MusicLab is a modern music streaming web application developed by me (CodeLab). It allows users to listen to music, like their favorite songs, and manage their listening experience. An admin panel is also included to securely add new music to the database.
 
 🚀 Features
-1 : Real-time Database: Firebase Firestore ka use karke gaane instant update hote hain.
 
-2 : Admin Panel: Ek secure dashboard jahan se naye gaane (Title, Artist, Album, Image, Audio) add kiye ja sakte hain.
+1️⃣ Real-time Database
+Songs are updated instantly using Firebase Firestore, ensuring real-time data synchronization.
 
-3 : Authentication Layer: Firebase Auth ka use karke sirf authorized admin (amytricks26024@gmail.com) hi upload kar sakta hai.
+2️⃣ Admin Panel
+A secure dashboard where admins can add new songs with details such as:
 
-4 :Dual-Layer Security: Admin access ke liye Email verification aur ek Secret PIN Prompt ka  
-  use kiya gaya hai.
+Title
 
-5 : Music Player: Fully functional player jisme Play/Pause, Skip Next/Previous, Volume        
-    control aur Progress seek bar laga hai.
+Artist
 
-6 : Personalized Library: Users ke liye 'Liked Songs' aur 'Recently Played' ka feature jo user-specific data store karta hai.
+Album
 
-7 : Dynamic UI: Responsive design jo mobile aur desktop dono par smooth chalta hai.
+Image
+
+Audio file
+
+3️⃣ Authentication Layer
+Only authorized admins can upload music using Firebase Authentication
+(Admin access is restricted to amytricks26024@gmail.com).
+
+4️⃣ Dual-Layer Security
+Admin access is protected using:
+
+Email verification
+
+A secret PIN prompt
+
+5️⃣ Music Player
+A fully functional music player featuring:
+
+Play / Pause
+
+Next / Previous track
+
+Volume control
+
+Progress seek bar
+
+6️⃣ Personalized Library
+User-specific features including:
+
+Liked Songs
+
+Recently Played
+All user data is stored securely.
+
+7️⃣ Dynamic UI
+A responsive and modern interface that works smoothly on both mobile and desktop devices.
 
 🛠️ Tech Stack
-Frontend: Next.js 14, React.js, Framer Motion (Animations ke liye).
 
-Styling: Pure CSS3 (Custom Modern UI).
+Frontend
 
-Backend/Database: Firebase Firestore.
+Next.js 14
 
-Auth: Firebase Authentication.
+React.js
 
-State Management: React Context API (MusicContext).
+Framer Motion (for animations)
 
-Icons: Lucide-React.
+Styling
+
+Pure CSS3 (custom modern UI)
+
+Backend / Database
+
+Firebase Firestore
+
+Authentication
+
+Firebase Authentication
+
+State Management
+
+React Context API (MusicContext)
+
+Icons
+
+Lucide React
 
 📁 Project Structure
-Plaintext
-
 musiclab/
 ├── app/
 │   ├── admin/           # Admin Panel Page
@@ -86,14 +135,22 @@ musiclab/
 
 ⚙️ Setup & Installation
 
-1 : Repository clone karein.
+1️⃣ Clone the repository.
 
-2 : npm install karke saari dependencies install karein.
+2️⃣ Install all dependencies using:
 
-3 : .env.local file banayein aur apna Firebase credentials aur Admin details dalein:
+npm install
 
-4 : NEXT_PUBLIC_ADMIN_EMAIL
 
-5 : NEXT_PUBLIC_ADMIN_PIN
+3️⃣ Create a .env.local file and add your Firebase credentials and admin details:
 
-6 : npm run dev se local server start karein.
+NEXT_PUBLIC_ADMIN_EMAIL=
+NEXT_PUBLIC_ADMIN_PIN=
+
+
+4️⃣ Start the local development server:
+
+npm run dev
+
+
+The application will run at http://localhost:3000 
