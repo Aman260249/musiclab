@@ -17,36 +17,16 @@
   gap: 15px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: bold;
-  font-size: 20px;
-  /* Navbar ki height ke hisab se padding adjust karein */
-  height: 100%; 
-}
-
-/* Logo Image ko control karne ke liye ye zaruri hai */
 .logo img {
-  height: 150px;      /* Isse height control hogi */
-  width: auto;       /* Aspect ratio maintain rahega */
-  object-fit: contain; 
+  height: 150px;
+  width: auto;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-/* Thoda pro touch: Hover par halka sa scale */
 .logo:hover img {
   transform: scale(1.05);
 }
-
-/* Mobile ke liye thoda chhota logo */
-@media (max-width: 768px) {
-  .logo img {
-    height: 100px;
-  }
-}
-
 
 .search-container input {
   width: 450px;
@@ -60,7 +40,7 @@
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
 .nav-link {
@@ -69,68 +49,37 @@
   font-weight: 500;
 }
 
-.auth-btn {
-  background: none;
-  border: none;
-  font-size: 15px;
+/* User Profile Capsule Merged */
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05); 
+  padding: 4px 4px 4px 15px;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.user-name {
+  color: #1db954 !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin-right: 12px;
+}
+
+.logout-btn {
+  background: #1db954 !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 8px 18px !important;
+  border-radius: 40px !important;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
   cursor: pointer;
-  padding: 8px 18px;
-  font-weight: 500;
 }
 
-.auth-btn.signup {
-  background-color: #000;
-  color: #fff;
-  border-radius: 20px;
-}
-
-/* --- RESPONSIVE LOGIC --- */
-
-/* Hamburger Icon styling */
-.menu-icon {
-  display: none; /* Desktop par hide */
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.menu-icon span {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-  border-radius: 2px;
-}
-
-@media (max-width: 1024px) {
-  .search-container input {
-    width: 250px; /* Tablet par search bar chhota */
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 10px 20px;
-  }
-
-  .menu-icon {
-    display: flex; /* Mobile par dikhega */
-  }
-
-  .nav-center, .nav-link, .login-text {
-    display: none; /* Mobile par search aur extra links hide */
-  }
-
-  .auth-btn.signup {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-} 
-
-/* search drop down  CSS start here */
-.search-container {
-  position: relative; /* Zaroori hai dropdown ke liye */
-}
-
+/* Search Dropdown */
 .search-results-dropdown {
   position: absolute;
   top: 100%;
@@ -141,7 +90,6 @@
   margin-top: 10px;
   max-height: 300px;
   overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
   z-index: 999;
 }
 
@@ -149,74 +97,47 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  gap: 15px;
+  gap: 12px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.search-result-item:hover {
-  background: #282828;
-}
+.search-result-item:hover { background: #282828; }
+.search-result-item img { width: 35px; height: 35px; border-radius: 4px; }
+.res-title { color: white; font-size: 13px; margin: 0; }
+.res-artist { color: #b3b3b3; font-size: 11px; margin: 0; }
 
-.search-result-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-}
-
-.res-title { color: white; font-size: 14px; margin: 0; }
-.res-artist { color: #b3b3b3; font-size: 12px; margin: 0; }
-
-
-/* search drop down  CSS end here */ 
-
-
-
-
-
-
-/* Navbar Right Profile Section */
-/* User Profile Capsule */
-.user-profile-section {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.08); /* Transparent glass feel */
-  padding: 6px 6px 6px 18px;
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-.user-profile-section:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
-  border-color: #1db954; /* Spotify green border on hover */
-}
-
-.user-name {
-  color: #000000 !important;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: capitalize;
-  margin-right: 12px;
-  letter-spacing: 0.5px;
-}
-
-.logout-btn {
-  background: #1db954 !important; /* Premium Green */
-  color: #000 !important;
-  border: none !important;
-  padding: 8px 20px !important;
-  border-radius: 40px !important;
-  font-size: 0.8rem !important;
-  font-weight: 800 !important;
+/* Hamburger Icon */
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
   cursor: pointer;
-  transition: all 0.2s ease;
+}
+.menu-icon span { width: 22px; height: 2px; background-color: #333; }
+
+/* --- RESPONSIVE LOGIC --- */
+@media (max-width: 1024px) {
+  .search-container input { width: 200px; }
 }
 
-.logout-btn:hover {
-  background: #ffffff !important; /* Contrast white on hover */
-  color: #ff4444 !important; /* Red text for logout warning feel */
-  box-shadow: 0 0 15px rgba(29, 185, 84, 0.4);
+@media (max-width: 768px) {
+  .navbar { padding: 10px 15px; }
+  .logo img { height: 100px; }
+  .menu-icon { display: flex; }
+  
+  /* Hiding elements on mobile */
+  .hide-on-mobile, .nav-center {
+    display: none !important;
+  }
+
+  .user-profile-section {
+    padding: 2px;
+    background: transparent;
+    border: none;
+  }
+
+  .logout-btn {
+    padding: 6px 12px !important;
+    font-size: 0.7rem !important;
+  }
 }

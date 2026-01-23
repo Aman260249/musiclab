@@ -8,7 +8,6 @@ import { auth } from '../../context/lib/firebase';
 import { signOut } from 'firebase/auth';
 
 const Navbar = ({ onMenuClick }) => {
-  // 1. Context se 'user' state bhi nikali
   const { searchQuery, setSearchQuery, playSong, setAllSongs, user } = useMusic();
   const [results, setResults] = useState([]);
 
@@ -31,7 +30,6 @@ const Navbar = ({ onMenuClick }) => {
     setSearchQuery("");
   };
 
-  // 2. Logout function
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -48,7 +46,6 @@ const Navbar = ({ onMenuClick }) => {
           <span></span><span></span><span></span>
         </div>
         <div className="logo">
-          {/* Logo click par home bhej dega */}
           <Link href="/">
             <img src="/images/logo-12333333.png" alt="MusicLab" style={{cursor: 'pointer'}} />
           </Link>
@@ -81,25 +78,23 @@ const Navbar = ({ onMenuClick }) => {
       </div>
 
       <div className="nav-right">
-        <Link href="/" className="nav-link">HOME</Link>
+        <Link href="/" className="nav-link hide-on-mobile">HOME</Link>
         
-        {/* 3. Conditional Rendering: Agar user login nahi hai (!user) */}
         {!user ? (
-          <>
+          <div className="auth-buttons">
             <Link href="/login">
               <button className="auth-btn login-text">Login</button>
             </Link>
             <Link href="/login?mode=signup">
               <button className="auth-btn signup-bg">Sign Up</button>
             </Link>
-          </>
+          </div>
         ) : (
-          /* 4. Agar user login hai (Show User Info + Logout) */
-          <div className="user-profile-section" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <span className="user-name" style={{ color: '#1db954', fontWeight: '600' }}>
+          <div className="user-profile-section">
+            <span className="user-name hide-on-mobile">
               {user.email.split('@')[0]}
             </span>
-            <button onClick={handleLogout} className="auth-btn logout-btn" style={{ background: 'transparent', border: '1px solid #ff4444', color: '#ff4444' }}>
+            <button onClick={handleLogout} className="logout-btn">
               Logout
             </button>
           </div>
