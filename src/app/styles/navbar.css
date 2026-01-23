@@ -115,29 +115,61 @@
 }
 .menu-icon span { width: 22px; height: 2px; background-color: #333; }
 
-/* --- RESPONSIVE LOGIC --- */
-@media (max-width: 1024px) {
-  .search-container input { width: 200px; }
-}
+
+/* --- RESPONSIVE LOGIC: FIXED MOBILE VIEW --- */
 
 @media (max-width: 768px) {
-  .navbar { padding: 10px 15px; }
-  .logo img { height: 100px; }
-  .menu-icon { display: flex; }
-  
-  /* Hiding elements on mobile */
-  .hide-on-mobile, .nav-center {
+  .navbar {
+    padding: 0 15px; /* Side padding thodi kam */
+    height: 60px;    /* Mobile par height sleek rakho */
+  }
+
+  .logo img {
+    height: 80px !important; /* Logo size mobile perfect */
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  /* Search aur Desktop links hide rahenge */
+  .nav-center, .nav-link, .hide-on-mobile {
     display: none !important;
   }
 
+  .nav-right {
+    gap: 8px; /* Buttons ke beech choti gap */
+  }
+
+  /* Login / Sign Up buttons mobile fix */
+  .auth-buttons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .auth-btn {
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+  }
+
+  /* Logout button mobile fix (mologin.png wala issue) */
   .user-profile-section {
-    padding: 2px;
-    background: transparent;
-    border: none;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .logout-btn {
-    padding: 6px 12px !important;
-    font-size: 0.7rem !important;
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+    background: #1db954 !important;
+    color: #fff !important;
+    border-radius: 30px !important;
+    box-shadow: 0 4px 10px rgba(29, 185, 84, 0.3); /* Chota sa glow */
   }
 }
+
+

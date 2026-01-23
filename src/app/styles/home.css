@@ -60,6 +60,9 @@
   min-width: 140px;
   text-align: center;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .artist-image-wrapper {
@@ -69,12 +72,20 @@
   overflow: hidden;
   margin: 0 auto 10px;
   border: 3px solid transparent;
-  transition: border 0.3s ease;
-  min-width: 100px; /* Ye zaroori hai */
-  min-height: 100px; /* Isse container pichkega nahi */
-  background-color: #e0e0e0;
+  transition: all 0.3s ease;
+  background-color: #f0f0f0; /* Loader color */
+  flex-shrink: 0; /* Important: image ko pichakne se rokega */
 }
-
+.artist-name-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 5px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Name lamba hua toh ... dikhayega */
+}
 .artist-card:hover .artist-image-wrapper {
   border: 3px solid #1db954;
 }
@@ -207,5 +218,30 @@
 
   .scrollable-content {
     padding-bottom: 180px;
+  }
+} 
+
+
+
+/* --- MOBILE FIXES --- recommet.jsx css start here  */
+@media (max-width: 768px) {
+  .artist-grid-layout {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* Mobile par 3 artists line mein acche lagenge */
+    gap: 10px !important;
+    overflow-x: hidden;
+  }
+
+  .artist-card {
+    min-width: 0 !important; /* Grid mein width auto rehne do */
+  }
+
+  .artist-image-wrapper {
+    width: 85px; /* Mobile size slightly smaller */
+    height: 85px;
+  }
+
+  .artist-name-label {
+    font-size: 11px;
   }
 }

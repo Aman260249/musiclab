@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useMusic } from '@/app/context/MusicContext';
@@ -7,19 +7,33 @@ import "../../styles/home.css";
 
 const RecommendedArtists = () => {
   const { allSongs = [] } = useMusic();
+  const [uniqueArtists, setUniqueArtists] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const uniqueArtists = allSongs.reduce((acc, song) => {
-    if (song.artist && !acc.find(a => a.name === song.artist)) {
-      acc.push({
-        name: song.artist,
-        img: song.artistImage || song.imageUrl || song.image || "/default-artist.png", 
-        id: song.artist.toLowerCase().trim().replace(/\s+/g, '-') 
-      });
+  useEffect(() => {
+    // Data filtering logic
+    if (allSongs.length > 0) {
+      const seen = new Set();
+      const filtered = allSongs.reduce((acc, song) => {
+        if (song.artist && !seen.has(song.artist)) {
+          seen.add(song.artist);
+          acc.push({
+            name: song.artist,
+            img: song.artistImage || song.imageUrl || song.image || "/default-artist.png", 
+            id: song.artist.toLowerCase().trim().replace(/\s+/g, '-') 
+          });
+        }
+        return acc;
+      }, []);
+      setUniqueArtists(filtered);
+      setIsLoaded(true);
     }
-    return acc;
-  }, []);
+  }, [allSongs]);
 
-  if (uniqueArtists.length === 0) return null;
+  // Agar data load nahi hua, toh gayab hone ki jagah khali space rakhega
+  if (!isLoaded && allSongs.length === 0) {
+    return <div className="trending-section" style={{ height: '200px', opacity: 0 }}></div>;
+  }
 
   return (
     <section className="trending-section">
@@ -28,7 +42,7 @@ const RecommendedArtists = () => {
         <Link href="/profileartis" className="see-all">See ALL</Link>
       </div>
       
-      <div className="songs-container">
+      <div className="songs-container artist-grid-layout">
         {uniqueArtists.map((artist) => (
           <Link 
             href={`/artist/${artist.id}`} 

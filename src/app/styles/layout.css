@@ -57,10 +57,11 @@ aside {
 
 /* LEFT SECTION */
 .player-left {
-  display: flex;
+ display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   flex: 1;
+  min-width: 0
 }
 
 .current-song-img img {
@@ -70,23 +71,37 @@ aside {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.current-song-details h4 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111;
+.current-song-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Zaroori: Text truncate karne ke liye */
+  max-width: 150px; /* Mobile par isse zyada lamba nahi hone dega */
 }
 
+.current-song-details h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  /* Long text fix: Ek line mein rakhega aur ... dikhayega */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .current-song-details p {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
-  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .like-icon {
-  margin-left: 10px;
+  flex-shrink: 0; /* Ye icon ko pichakne (shrink) se rokega */
+  margin-left: 5px;
   color: #888;
   cursor: pointer;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .like-icon:hover {
@@ -205,17 +220,68 @@ aside {
 
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
+  /* 1. Container Fix: Height aur Visibility */
   .music-player-container {
-    height: 70px; /* Thoda sleek height */
-    bottom: 0;    /* Ab ye ekdum niche fix ho jayega */
+    height: 75px; 
+    bottom: 0;
     padding: 0 12px;
-    background: rgba(255, 255, 255, 0.95); /* Better visibility */
+    background: rgba(255, 255, 255, 0.98); 
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
-  .player-right, .progress-container-pro, .secondary-icon { display: none; }
-  .player-left { flex: 2; }
-  .current-song-img img { width: 50px; height: 50px; }
-  .controls { gap: 20px; }
+
+  /* 2. Hiding non-essential items on mobile */
+  .player-right, .progress-container-pro, .secondary-icon { 
+    display: none !important; 
+  }
+
+  /* 3. Left Section & Text Alignment Fix (V. Important) */
+  .player-left {
+    flex: 3; 
+    gap: 10px;
+    min-width: 0; /* Isse flex child pichak nahi payega */
+  }
+
+  .current-song-img img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+
+  .current-song-details {
+    flex: 1;
+    min-width: 0; 
+    max-width: 120px; /* Adjust based on your phone screen */
+  }
+
+  .current-song-details h4 {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Long name fix: ... dikhayega */
+  }
+
+  .current-song-details p {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 4. Controls & Like Icon */
+  .controls { 
+    gap: 15px; 
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .play-pause-btn-pro {
+    width: 42px;
+    height: 42px;
+  }
+
+  .like-icon {
+    flex-shrink: 0; /* Dil icon kabhi chhota nahi hoga */
+  }
 }
 /* music bar end css  */
 
