@@ -1,19 +1,25 @@
 "use client";
+
 import React, { useState, useEffect } from 'react';
-import "../../styles/navbar.css";
-import { useMusic } from '../../context/MusicContext';
 import Link from 'next/link';
-import { trendingSongs } from '../../data/songs'; 
-import { auth } from '../../context/lib/firebase';
 import { signOut } from 'firebase/auth';
+import { auth } from '../../context/lib/firebase';
+import { useMusic } from '../../context/MusicContext';
+import { trendingSongs } from '../../data/songs'; 
+import "../../styles/navbar.css";
 
 const Navbar = ({ onMenuClick }) => {
+  // --- 1. CONTEXT & STATE ---
   const { searchQuery, setSearchQuery, playSong, setAllSongs, user } = useMusic();
   const [results, setResults] = useState([]);
 
-  // Search logic
+  // --- 2. SEARCH LOGIC ---
   useEffect(() => {
-    if (searchQuery.length > 0) {
+    /**
+     * Filters trendingSongs based on user input in the search bar.
+     * Matches against both song title and artist name.
+     */
+    if (searchQuery.trim().length > 0) {
       const filtered = trendingSongs.filter(song =>
         song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         song.artist.toLowerCase().includes(searchQuery.toLowerCase())
@@ -24,48 +30,71 @@ const Navbar = ({ onMenuClick }) => {
     }
   }, [searchQuery]);
 
+  // --- 3. EVENT HANDLERS ---
+
+  /**
+   * Triggers when a user clicks a search result.
+   * Plays the song, updates the queue, and clears the search state.
+   */
   const handleResultClick = (song) => {
     setAllSongs(trendingSongs);
     playSong(song);
     setSearchQuery("");
+    setResults([]);
   };
 
+  /**
+   * Handles Firebase Sign-out logic.
+   */
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      alert("Mubarak ho, successfully logout ho gaye!");
     } catch (error) {
-      console.error("Logout Error:", error.message);
+      console.error("Authentication Error: Logout failed", error.message);
     }
   };
 
+  // --- 4. RENDER LOGIC ---
   return (
     <nav className="navbar">
+      
+      {/* LEFT: Branding & Toggle Menu */}
       <div className="nav-left">
-        <div className="menu-icon" onClick={onMenuClick}>
-          <span></span><span></span><span></span>
-        </div>
-        <div className="logo">
-          <Link href="/">
-            <img src="/images/logo-12333333.png" alt="MusicLab" style={{cursor: 'pointer'}} />
-          </Link>
-        </div>
+        <button 
+          className="menu-icon" 
+          onClick={onMenuClick} 
+          aria-label="Toggle Side Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <Link href="/" className="logo">
+          <img src="/images/logo-12333333.png" alt="MusicLab" />
+        </Link>
       </div>
 
+      {/* CENTER: Search Functionality */}
       <div className="nav-center">
-        <div className="search-container">
+        <div className="search-box">
+          <span className="search-icon">🔍</span>
           <input
             type="text"
             placeholder="Search songs or artists..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-
+          
+          {/* Search Dropdown Overlay */}
           {results.length > 0 && (
             <div className="search-results-dropdown">
               {results.map(song => (
-                <div key={song.id} className="search-result-item" onClick={() => handleResultClick(song)}>
-                  <img src={song.img} alt="" />
+                <div 
+                  key={song.id} 
+                  className="search-result-item" 
+                  onClick={() => handleResultClick(song)}
+                >
+                  <img src={song.img} alt={song.title} />
                   <div className="result-info">
                     <p className="res-title">{song.title}</p>
                     <p className="res-artist">{song.artist}</p>
@@ -77,23 +106,31 @@ const Navbar = ({ onMenuClick }) => {
         </div>
       </div>
 
+      {/* RIGHT: Navigation & Auth Management */}
       <div className="nav-right">
-        <Link href="/" className="nav-link hide-on-mobile">HOME</Link>
+        <Link href="/" className="nav-link hide-tablet">
+          HOME
+        </Link>
         
         {!user ? (
-          <div className="auth-buttons">
+          /* Logged Out State */
+          <div className="auth-group">
             <Link href="/login">
-              <button className="auth-btn login-text">Login</button>
+              <button className="login-link">Login</button>
             </Link>
             <Link href="/login?mode=signup">
-              <button className="auth-btn signup-bg">Sign Up</button>
+              <button className="signup-btn">Sign Up</button>
             </Link>
           </div>
         ) : (
-          <div className="user-profile-section">
-            <span className="user-name hide-on-mobile">
-              {user.email.split('@')[0]}
-            </span>
+          /* Logged In State */
+          <div className="user-profile">
+            <div className="user-info hide-mobile">
+              <p className="welcome-msg">Welcome,</p>
+              <p className="user-id">
+                {user.email ? user.email.split('@')[0] : 'User'}
+              </p>
+            </div>
             <button onClick={handleLogout} className="logout-btn">
               Logout
             </button>

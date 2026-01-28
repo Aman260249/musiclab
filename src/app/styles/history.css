@@ -1,52 +1,106 @@
+/* history.css */
+
 .history-container {
   padding: 110px 40px 40px; 
-  background: linear-gradient(to bottom, #1e1e1e 0%, #121212 100%);
+  /* Deep obsidian gradient for focus */
+  background: radial-gradient(circle at top left, #1e1e1e 0%, #121212 100%);
   min-height: 100vh;
   color: white;
+  font-family: 'Inter', sans-serif;
 }
 
+/* --- HEADER WITH GRADIENT TEXT --- */
 .history-header-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .history-header-section h1 {
-  font-size: 3.2rem; /* Thoda bada aur bold */
+  font-size: clamp(2.5rem, 8vw, 3.5rem); 
   font-weight: 900;
-  letter-spacing: -1px;
+  letter-spacing: -2px;
   margin: 0;
-  background: -webkit-linear-gradient(#fff, #888);
+  /* Cinematic silver gradient */
+  background: linear-gradient(to bottom, #ffffff 30%, #a1a1a1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .history-header-section p {
-  color: #b3b3b3;
-  margin-top: 10px;
+  color: #888;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
+/* --- GRID SYSTEM --- */
 .history-list-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 30px;
-  animation: fadeIn 0.8s ease-in-out;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 35px;
+  /* Smooth Fade-in animation */
+  animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Animation for smooth loading */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.empty-history-state, .no-history-msg {
+/* --- EMPTY STATE UI --- */
+.empty-history-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
-  color: #b3b3b3;
+  height: 60vh;
+  text-align: center;
+}
+
+.empty-history-state .icon-large {
+  font-size: 80px;
+  margin-bottom: 20px;
+  opacity: 0.2;
+}
+
+.no-history-msg h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.no-history-msg p {
+  color: #666;
+  max-width: 300px;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes slideUpFade {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+  .history-container {
+    padding: 80px 20px 120px;
+  }
+
+  .history-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .history-list-grid {
+    grid-template-columns: repeat(2, 1fr); /* Mobile par 2 cards per row */
+    gap: 15px;
+  }
+
+  .history-header-section h1 {
+    font-size: 2.2rem;
+  }
 }

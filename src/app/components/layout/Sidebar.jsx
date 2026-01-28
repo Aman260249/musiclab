@@ -1,78 +1,89 @@
 "use client";
+
 import React from 'react';
-import "../../styles/sidebar.css";
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import "../../styles/sidebar.css";
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
-  
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      if (window.innerWidth <= 768) {
-        closeSidebar();
-      }
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start' 
-      });
-    }
-  }; 
-
   const router = useRouter();
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
+  // --- 1. NAVIGATION & SCROLL LOGIC ---
+  /**
+   * Handles navigation based on the current route.
+   * If on home, it scrolls smoothly to the section.
+   * If on another page, it redirects to home with a hash.
+   */
   const handleNavigation = (id) => {
     if (pathname !== '/') {
-      // 1. Agar user home par nahi hai, toh pehle Home par bhejo
-      // Hum URL mein hash (#id) bhej rahe hain
+      // Redirect to home page with section hash
       router.push(`/#${id}`);
     } else {
-      // 2. Agar user pehle se home par hai, toh smooth scroll karo
+      // Internal smooth scroll if already on home
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
       }
     }
     
-    // Mobile par sidebar band kar do
+    // Close sidebar on mobile devices after click
     if (window.innerWidth <= 768) {
       closeSidebar();
     }
   };
 
+  // --- 2. RENDER COMPONENT ---
   return (
     <>
-      {isOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
+      {/* Background Overlay for mobile view */}
+      {isOpen && (
+        <div className="sidebar-overlay" onClick={closeSidebar}></div>
+      )}
 
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+        {/* Mobile Close Button */}
         <div className="mobile-close" onClick={closeSidebar}>✕</div>
 
+        {/* --- BROWSE SECTION --- */}
         <div className="menu-section">
           <p className="section-title">BROWSE</p>
           <ul>
             <li onClick={() => handleNavigation('new-releases')}>New Releases</li>
             <li onClick={() => handleNavigation('top-charts')}>Top Charts</li>
             <li onClick={() => handleNavigation('recommendedartists')}>Top Artists</li>
-            
-             <li> <Link href="/albums" className="sidebar-link">Albums</Link> </li>
+            <li>
+              <Link href="/albums" className="sidebar-link" onClick={closeSidebar}>
+                Albums
+              </Link>
+            </li>
             <li onClick={() => handleNavigation('categories')}>Categories</li>
           </ul>
         </div>
 
+        {/* --- LIBRARY SECTION --- */}
         <div className="menu-section">
           <p className="section-title">LIBRARY</p>
           <ul>
-            {/* --- FIX: Har item ab <li> ke andar hai --- */}
             <li>
-              <Link href="/history" className="sidebar-link">History</Link>
+              <Link href="/history" className="sidebar-link" onClick={closeSidebar}>
+                History
+              </Link>
             </li>
             <li>
-              <Link href="/liked-songs" className="sidebar-link">Liked Songs</Link>
+              <Link href="/liked-songs" className="sidebar-link" onClick={closeSidebar}>
+                Liked Songs
+              </Link>
             </li>
-           
           </ul>
-          <button className="new-playlist-btn">+ New Playlist</button>
+          
+          {/* Call to Action: Playlist Creation */}
+          <button className="new-playlist-btn">
+            + New Playlist
+          </button>
         </div>
       </aside>
     </>

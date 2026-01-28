@@ -1,5 +1,7 @@
+/* bottom-nav.css */
+
 .bottom-nav {
-  display: none; /* Desktop par nahi dikhega */
+  display: none; /* Default hidden for Desktop */
 }
 
 @media (max-width: 768px) {
@@ -9,14 +11,16 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 65px;
-    background-color: rgba(255, 255, 255, 0.95); /* Thoda glass effect */
-    backdrop-filter: blur(10px); /* Background dhundla dikhega */
-    border-top: 1px solid #eee;
+    height: 70px; /* Slightly increased for thumb comfort */
+    background-color: rgba(255, 255, 255, 0.85); /* Modern translucent white */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     justify-content: space-around;
     align-items: center;
     z-index: 3000;
-    padding-bottom: 5px;
+    padding-bottom: env(safe-area-inset-bottom); /* iOS Notch support */
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.03);
   }
 
   .nav-item {
@@ -24,23 +28,60 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #888; /* Unselected icons ka color */
-    transition: all 0.3s ease;
+    color: #999; /* Neutral grey for inactive */
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     flex: 1;
+    position: relative;
+  }
+
+  /* Icon styling inside nav item */
+  .nav-item svg, .nav-item i {
+    font-size: 24px;
+    margin-bottom: 2px;
+    transition: transform 0.2s ease;
   }
 
   .nav-item .label {
-    font-size: 11px;
-    margin-top: 4px;
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  /* Jab icon par click ho ya wo active ho */
+  /* --- ACTIVE STATE --- */
   .nav-item.active {
-    color: #1db954; /* Spotify green ya apna pasandida color */
+    color: #1db954; /* Signature Green */
   }
 
-  .nav-item:active {
-    transform: scale(0.9); /* Click karne par chhota sa bounce effect */
+  .nav-item.active svg {
+    transform: translateY(-2px); /* Slight lift for active icon */
   }
+
+  /* --- MICRO-INTERACTION --- */
+  .nav-item:active {
+    transform: scale(0.85); /* "Haptic" bounce on touch */
+    opacity: 0.7;
+  }
+
+  /* Optional: Active indicator dot */
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 4px;
+    height: 4px;
+    background: #1db954;
+    border-radius: 50%;
+  }
+}
+
+/* Dark Mode Support (If you add it later) */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  .bottom-nav {
+    background-color: rgba(18, 18, 18, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nav-item { color: #888; }
+  .nav-item.active { color: #fff; } /* White icons on dark bg look better */
 }

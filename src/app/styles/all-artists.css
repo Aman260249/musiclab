@@ -1,13 +1,29 @@
+/* all-artists.css */
+
 .all-artists-wrapper {
   background: linear-gradient(to bottom, #1e1e1e, #121212);
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 100px 24px 150px; /* Padding adjusted for navbar/footer */
   color: white;
+  font-family: 'Inter', sans-serif;
 }
 
+.section-header {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.section-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* --- ARTISTS GRID --- */
 .artists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  /* Responsive grid that adapts to screen size */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 30px;
   justify-items: center;
   margin-top: 30px;
@@ -16,28 +32,40 @@
 .artist-card-link {
   text-decoration: none;
   color: inherit;
+  width: 100%;
 }
 
 .artists-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   padding: 20px;
-  border-radius: 15px;
-  transition: background 0.3s ease;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
-  width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .artists-card:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
+/* --- CIRCULAR IMAGE SECTION --- */
 .artists-image-wrapper {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%; /* Circle for Artists */
   overflow: hidden;
-  margin: 0 auto 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.artists-card:hover .artists-image-wrapper {
+  transform: scale(1.05); /* Subtle zoom on hover */
 }
 
 .artists-image-wrapper img {
@@ -46,11 +74,42 @@
   object-fit: cover;
 }
 
+/* --- LABELS --- */
 .artists-name-label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  margin: 0;
+  color: #fff;
+  margin-bottom: 5px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.artist-badge {
+  font-size: 13px;
+  color: #b3b3b3;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+  .artists-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 artists per row on mobile */
+    gap: 15px;
+  }
+  
+  .artists-card {
+    padding: 15px;
+  }
+  
+  .artists-image-wrapper {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .artists-name-label {
+    font-size: 15px;
+  }
 }

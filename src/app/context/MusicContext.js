@@ -1,13 +1,17 @@
 "use client";
+
 import React, { createContext, useState, useContext, useRef, useEffect } from 'react';
 import { auth, db } from "../context/lib/firebase"; 
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, updateDoc, getDoc, setDoc, collection, onSnapshot, query } from "firebase/firestore";
-import { arrayUnion, arrayRemove } from "firebase/firestore";
+import { 
+  doc, updateDoc, getDoc, setDoc, collection, 
+  onSnapshot, query, arrayUnion, arrayRemove 
+} from "firebase/firestore";
 
 const MusicContext = createContext();
 
 export const MusicProvider = ({ children }) => {
+  // --- STATE MANAGEMENT ---
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -17,18 +21,19 @@ export const MusicProvider = ({ children }) => {
   const [allSongs, setAllSongs] = useState([]); 
   const [user, setUser] = useState(null);
   const [likedSongs, setLikedSongs] = useState([]); 
-  const [recentPlayed, setRecentPlayed] = useState([]); // Default empty array
+  const [recentPlayed, setRecentPlayed] = useState([]);
 
   const audioRef = useRef(null);
 
-  // --- 1. REAL-TIME DATA FETCHING ---
+  // --- 1. REAL-TIME SONGS FETCHING ---
   useEffect(() => {
+    // Listen to the entire 'songs' collection from Firestore
     const q = query(collection(db, "songs"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const songsData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-        // Ensure src is always there for audio player
+        // Fallback for audio source key
         src: doc.data().audioUrl || doc.data().src 
       }));
       setAllSongs(songsData);
@@ -36,7 +41,7 @@ export const MusicProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // --- 2. USER AUTH & DATA SYNC ---
+  // --- 2. AUTHENTICATION & USER DATA SYNC ---
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -46,15 +51,16 @@ export const MusicProvider = ({ children }) => {
 
         if (userDoc.exists()) {
           const data = userDoc.data();
-          // Filter out any default/broken data during sync
           setLikedSongs(data.likedSongs || []);
           setRecentPlayed(data.recentPlayed || []);
         } else {
+          // Initialize new user document in Firestore
           await setDoc(userRef, { likedSongs: [], recentPlayed: [] });
           setLikedSongs([]);
           setRecentPlayed([]);
         }
       } else {
+        // Reset state on logout
         setLikedSongs([]);
         setRecentPlayed([]);
       }
@@ -62,33 +68,58 @@ export const MusicProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // --- 3. UPDATED RECENTLY PLAYED LOGIC (Removes Duplicates & Fixes Mix-up) ---
+  // --- 3. RECENTLY PLAYED LOGIC ---
   const addToRecent = async (song) => {
     if (!auth.currentUser) return;
-    
     const userRef = doc(db, "users", auth.currentUser.uid);
     
-    // Yahan hum filter lagate hain taaki PURANA data mix na ho
-    // Aur agar same gaana phir se play ho, toh purana wala hat kar naya top par aa jaye
     setRecentPlayed((prev) => {
+      // Remove the song if it already exists to move it to the top
       const filtered = prev.filter(s => s.id !== song.id);
-      const updated = [song, ...filtered].slice(0, 15); // Max 15 songs in history
+      const updated = [song, ...filtered].slice(0, 15); // History limit: 15
       
-      // Firestore update in background
-      updateDoc(userRef, { recentPlayed: updated }).catch(err => console.error(err));
-      
+      // Update Firestore in the background
+      updateDoc(userRef, { recentPlayed: updated }).catch(err => 
+        console.error("Firestore History Update Error:", err)
+      );
       return updated;
     });
   };
 
+  // --- 4. PLAYBACK CONTROLS ---
   const playSong = (song) => {
     if (!song) return;
     setCurrentSong(song);
     setIsPlaying(true);
-    addToRecent(song); // Only 1 argument needed now
+    addToRecent(song);
   };
 
-  // --- 4. LIKE LOGIC ---
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(e => console.error("Playback Error:", e));
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const skipNext = () => {
+    if (!currentSong || allSongs.length === 0) return;
+    const idx = allSongs.findIndex(s => s.id === currentSong.id);
+    const nextSong = allSongs[(idx + 1) % allSongs.length];
+    playSong(nextSong);
+  };
+
+  const skipPrevious = () => {
+    if (!currentSong || allSongs.length === 0) return;
+    const idx = allSongs.findIndex(s => s.id === currentSong.id);
+    const prevSong = allSongs[(idx - 1 + allSongs.length) % allSongs.length];
+    playSong(prevSong);
+  };
+
+  // --- 5. SOCIAL & UTILITY LOGIC ---
   const toggleLike = async (song) => {
     if (!user) return alert("Pehle login kar lo bhai! 😂");
     const userRef = doc(db, "users", user.uid);
@@ -97,51 +128,35 @@ export const MusicProvider = ({ children }) => {
     try {
       if (isAlreadyLiked) {
         await updateDoc(userRef, { likedSongs: arrayRemove(song) });
-        setLikedSongs((prev) => prev.filter((s) => s.id !== song.id));
+        setLikedSongs(prev => prev.filter(s => s.id !== song.id));
       } else {
         await updateDoc(userRef, { likedSongs: arrayUnion(song) });
-        setLikedSongs((prev) => [...prev, song]);
+        setLikedSongs(prev => [...prev, song]);
       }
     } catch (error) {
       console.error("Like Toggle Error:", error);
     }
   };
 
-  // --- 5. AUDIO CONTROLS & EFFECTS ---
   const logout = () => signOut(auth);
-  const handleTimeUpdate = () => { if(audioRef.current) setCurrentTime(audioRef.current.currentTime); };
-  const handleLoadedMetadata = () => { if(audioRef.current) setDuration(audioRef.current.duration); };
   const seekTo = (time) => { if (audioRef.current) audioRef.current.currentTime = time; };
-  const changeVolume = (val) => { setVolume(val); if (audioRef.current) audioRef.current.volume = val; };
-
-  const skipNext = () => {
-    if (!currentSong || allSongs.length === 0) return;
-    const idx = allSongs.findIndex(s => s.id === currentSong.id);
-    if (idx !== -1) playSong(allSongs[(idx + 1) % allSongs.length]);
+  const changeVolume = (val) => { 
+    setVolume(val); 
+    if (audioRef.current) audioRef.current.volume = val; 
   };
 
-  const skipPrevious = () => {
-    if (!currentSong || allSongs.length === 0) return;
-    const idx = allSongs.findIndex(s => s.id === currentSong.id);
-    if (idx !== -1) playSong(allSongs[(idx - 1 + allSongs.length) % allSongs.length]);
-  };
-
+  // Audio Sync Effect: Triggers when currentSong changes
   useEffect(() => {
     if (currentSong && audioRef.current) {
-      audioRef.current.src = currentSong.src || currentSong.audioUrl; 
+      const src = currentSong.src || currentSong.audioUrl;
+      if (audioRef.current.src !== src) {
+        audioRef.current.src = src;
+      }
       if (isPlaying) {
-        audioRef.current.play().catch(e => console.log("Playback failed:", e));
+        audioRef.current.play().catch(e => console.log("Auto-play blocked or failed:", e));
       }
     }
   }, [currentSong]);
-
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) audioRef.current.pause();
-      else audioRef.current.play();
-      setIsPlaying(!isPlaying);
-    }
-  };
 
   return (
     <MusicContext.Provider value={{
@@ -154,8 +169,8 @@ export const MusicProvider = ({ children }) => {
       {children}
       <audio 
         ref={audioRef} 
-        onTimeUpdate={handleTimeUpdate} 
-        onLoadedMetadata={handleLoadedMetadata} 
+        onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)} 
+        onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)} 
         onEnded={skipNext} 
       />
     </MusicContext.Provider>
